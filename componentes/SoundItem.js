@@ -54,8 +54,9 @@ export default class SoundItem extends HTMLElement {
                     font-size: 1.2em;
                 }
                 input[type="checkbox"] {
-                    transform: scale(1.3);
-                    margin-left: 10px;
+                    transform: scale(1.5);
+                    margin-left: 20px;
+                   
                 }
             </style>
 

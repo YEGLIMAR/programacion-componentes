@@ -4,7 +4,7 @@ export default class ImportExport extends HTMLElement {
         this.attachShadow({ mode: "open" });
         this.selectedAudios = [];
         this.currentAudio = null;
-        this.currentAlbum = null; // Para saber si estamos en una playlist
+        this.currentAlbum = null; 
     }
 
     connectedCallback() {
@@ -12,7 +12,7 @@ export default class ImportExport extends HTMLElement {
         this.addEventListeners();
 
         document.addEventListener("playlistChanged", (event) => {
-            this.currentAlbum = event.detail.album; // Guardar el álbum actual
+            this.currentAlbum = event.detail.album; 
         });
 
         document.addEventListener("audioSelectionChanged", (event) => {
@@ -76,7 +76,6 @@ export default class ImportExport extends HTMLElement {
         this.shadowRoot.querySelector("#confirmAudio").addEventListener("click", () => this.confirmAudio());
         this.shadowRoot.querySelector("#deleteAudio").addEventListener("click", () => this.deleteSelectedAudios());
     
-        // Corregir el binding de la función para evitar errores
         this.shadowRoot.querySelector("#exportAudio").addEventListener("click", () => this.exportSelectedAudios());
     }
 
@@ -90,7 +89,7 @@ export default class ImportExport extends HTMLElement {
             document.dispatchEvent(new CustomEvent("audioDeleted", { detail: { id: audio.id } }));
         });
     
-        this.selectedAudios = []; // Vaciar la lista de seleccionados
+        this.selectedAudios = [];
         alert("Selected audios deleted successfully!");
     }
     

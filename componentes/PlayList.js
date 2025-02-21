@@ -4,7 +4,7 @@ class PlaylistView extends HTMLElement {
         this.attachShadow({ mode: "open" });
 
         this.albums = JSON.parse(localStorage.getItem("albums")) || {};
-        this.currentAlbum = null; // Controla si estamos dentro de una playlist
+        this.currentAlbum = null; 
     }
 
     connectedCallback() {
@@ -35,25 +35,26 @@ class PlaylistView extends HTMLElement {
                     background: white;
                     border-radius: 10px;
                     cursor: pointer;
-                    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+                    box-shadow: 0 4px 6px rgba(234, 216, 216, 0.1);
                     text-align: center;
                     font-weight: bold;
                 }
                 .album:hover {
-                    background: #ffcc80;
+                    background:rgb(217, 153, 169);
                 }
                 .create-playlist {
                     display: flex;
                     gap: 5px;
+
                 }
                 input {
                     flex: 1;
-                    padding: 5px;
-                    border: 1px solid #ddd;
+                    padding: 15px;
+                    border: 0px;
                     border-radius: 5px;
                 }
                 button {
-                    background: #4caf50;
+                    background:rgb(235, 79, 7);
                     border: none;
                     padding: 5px 10px;
                     color: white;
@@ -66,7 +67,7 @@ class PlaylistView extends HTMLElement {
             <div class="playlist-container">
                 <div class="create-playlist">
                     <input type="text" id="playlistName" placeholder="New Playlist Name">
-                    <button id="createPlaylist">➕ Create</button>
+                    <button id="createPlaylist"> + Create</button>
                 </div>
                 ${Object.keys(this.albums).length === 0 
                     ? "<p>No playlists yet 😢</p>"
@@ -98,7 +99,7 @@ class PlaylistView extends HTMLElement {
     
 
     renderAlbum() {
-        this.notifyPlaylistChange(); // 🔹 Notificar la playlist seleccionada
+        this.notifyPlaylistChange(); 
     
         this.shadowRoot.innerHTML = `
             <div class="album-view">
