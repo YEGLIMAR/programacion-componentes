@@ -7,7 +7,6 @@ export default class TabsNavigation extends HTMLElement {
         this.tabs = [
             { id: "all", label: "All Sounds" },
             { id: "playlist", label: "Your Playlist" },
-            { id: "favorites", label: "Favorites" }
         ];
 
         this.activeTab = "all"; // Pestaña activa por defecto

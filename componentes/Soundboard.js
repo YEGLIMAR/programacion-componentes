@@ -58,9 +58,10 @@ export default class SoundBoard extends HTMLElement {
             <div class="soundboard">
                 <div class="header">SOUNDBOARD <br> <span style="font-size:14px;">CLASSIC</span></div>
                 <tabs-navigation></tabs-navigation>
+                <import-export></import-export>
                 <div class="content" id="content">
                     <sound-list></sound-list> <!-- Por defecto mostramos All Sounds -->
-                </div>
+                   
             </div>
         `;
 
@@ -69,7 +70,7 @@ export default class SoundBoard extends HTMLElement {
 
     changeTab(selectedTab) {
         const content = this.shadowRoot.querySelector("#content");
-        content.innerHTML = ""; // 📌 Limpiar antes de renderizar una nueva vista
+        content.innerHTML = "";
 
         if (selectedTab === "playlist") {
             content.appendChild(document.createElement("playlist-view"));

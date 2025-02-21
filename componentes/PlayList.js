@@ -21,7 +21,6 @@ class PlaylistView extends HTMLElement {
         }
     }
 
-    // 📌 Mostrar lista de playlists (SIN audios)
     renderAlbumList() {
         this.shadowRoot.innerHTML = `
             <style>
@@ -43,24 +42,6 @@ class PlaylistView extends HTMLElement {
                 .album:hover {
                     background: #ffcc80;
                 }
-                .title-bar {
-                    display: flex;
-                    justify-content: space-between;
-                    align-items: center;
-                    padding: 10px;
-                    font-size: 20px;
-                    font-weight: bold;
-                }
-                .icons {
-                    display: flex;
-                    gap: 10px;
-                }
-                .icons button {
-                    background: none;
-                    border: none;
-                    cursor: pointer;
-                    font-size: 1.2em;
-                }
                 .create-playlist {
                     display: flex;
                     gap: 5px;
@@ -80,19 +61,9 @@ class PlaylistView extends HTMLElement {
                     cursor: pointer;
                     font-weight: bold;
                 }
-                button:hover {
-                    background: #45a049;
-                }
             </style>
 
             <div class="playlist-container">
-                <div class="title-bar">
-                    <span>The list</span>
-                    <div class="icons">
-                        <button>📂</button>
-                        <button>📤</button>
-                    </div>
-                </div>
                 <div class="create-playlist">
                     <input type="text" id="playlistName" placeholder="New Playlist Name">
                     <button id="createPlaylist">➕ Create</button>
@@ -110,74 +81,39 @@ class PlaylistView extends HTMLElement {
         this.shadowRoot.querySelectorAll(".album").forEach(albumElement => {
             albumElement.addEventListener("click", (event) => {
                 this.currentAlbum = event.target.dataset.album;
+                this.notifyPlaylistChange(); // 🔹 Notificar a ImportExport.js sobre la playlist seleccionada
                 this.render();
             });
         });
+        
     }
 
-    // 📌 Mostrar audios dentro de una playlist con el mismo diseño de "All Sounds"
+    notifyPlaylistChange() {
+        console.log(`Cambiando a la playlist: ${this.currentAlbum}`); // 🔹 Verificar en la consola
+        document.dispatchEvent(new CustomEvent("playlistChanged", { 
+            detail: { album: this.currentAlbum } 
+        }));
+    }
+    
+    
+
     renderAlbum() {
+        this.notifyPlaylistChange(); // 🔹 Notificar la playlist seleccionada
+    
         this.shadowRoot.innerHTML = `
-            <style>
-                .album-view {
-                    padding: 10px;
-                }
-                .title-bar {
-                    display: flex;
-                    justify-content: space-between;
-                    align-items: center;
-                    padding: 10px;
-                    font-size: 20px;
-                    font-weight: bold;
-                }
-                .icons {
-                    display: flex;
-                    gap: 10px;
-                }
-                .icons button {
-                    background: none;
-                    border: none;
-                    cursor: pointer;
-                    font-size: 1.2em;
-                }
-                .back-button {
-                    background: #ff9800;
-                    border: none;
-                    padding: 5px 10px;
-                    cursor: pointer;
-                    border-radius: 5px;
-                    color: white;
-                    font-weight: bold;
-                    margin-bottom: 10px;
-                }
-                .sound-list-container {
-                    height: 400px;
-                    overflow-y: auto;
-                    padding: 10px;
-                    display: flex;
-                    flex-direction: column;
-                    gap: 10px;
-                }
-            </style>
             <div class="album-view">
                 <button class="back-button">⬅️ Back</button>
-                <div class="title-bar">
-                    <span>${this.currentAlbum}</span>
-                    <div class="icons">
-                        <button>📂</button>
-                        <button>📤</button>
-                    </div>
-                </div>
                 <sound-list album="${this.currentAlbum}"></sound-list>
             </div>
         `;
-
+    
         this.shadowRoot.querySelector(".back-button").addEventListener("click", () => {
             this.currentAlbum = null;
             this.render();
         });
     }
-
+    
+            
     createPlaylist() {
         const input = this.shadowRoot.querySelector("#playlistName");
         const playlistName = input.value.trim();
